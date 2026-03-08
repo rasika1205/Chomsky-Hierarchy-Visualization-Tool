@@ -463,6 +463,15 @@ POST /generate-dfa
 Returns an SVG representation of the automaton.
 
 ---
+## Demo
+<img width="1835" height="911" alt="Screenshot 2026-03-08 191331" src="https://github.com/user-attachments/assets/ee0deb2d-366f-4761-a7fb-0de94664c407" />
+<img width="1751" height="911" alt="Screenshot 2026-03-08 191415" src="https://github.com/user-attachments/assets/0fa9346c-83ef-496a-b10f-c38066cb534a" />
+<img width="1630" height="904" alt="Screenshot 2026-03-08 191439" src="https://github.com/user-attachments/assets/79efa325-a3a5-4589-a820-7cc79cf5e804" />
+<img width="1607" height="902" alt="Screenshot 2026-03-08 191809" src="https://github.com/user-attachments/assets/0903b933-125d-4eb1-85a8-703d43e83f9d" />
+<img width="1590" height="907" alt="Screenshot 2026-03-08 191916" src="https://github.com/user-attachments/assets/2a0d3abe-96e5-490d-b19d-fe2e684a9642" />
+<img width="1598" height="896" alt="Screenshot 2026-03-07 200004" src="https://github.com/user-attachments/assets/18d31b21-29f5-4dd2-bb99-7733960f393b" />
+
+---
 
 # Educational Value
 
@@ -484,14 +493,7 @@ The result is a **complete interactive learning environment for ToC**.
 
 ---
 
+##  Author
 
-# License
-
-This project is intended for **educational purposes**.
-
-You may choose to release it under the **MIT License**.
-
----
-
-
-They make the repo look **10× more impressive to professors and recruiters**.
+**Rasika Gautam**
+2024UCM2694 Semester 4, Mathematics and Computing
