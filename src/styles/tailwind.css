@@ -1,0 +1,35 @@
+@import 'tailwindcss' source(none);
+@source '../**/*.{js,ts,jsx,tsx}';
+
+@import 'tw-animate-css';
+
+/* React Flow dark mode customizations */
+.react-flow__node {
+  border-radius: 12px;
+}
+
+.react-flow__edge-path {
+  stroke-width: 2;
+}
+
+.react-flow__handle {
+  background: rgba(168, 85, 247, 0.5);
+  border: 2px solid rgba(168, 85, 247, 0.8);
+  width: 10px;
+  height: 10px;
+}
+
+.react-flow__controls {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(12px);
+}
+
+.react-flow__controls-button {
+  background: rgba(168, 85, 247, 0.2);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  color: white;
+}
+
+.react-flow__controls-button:hover {
+  background: rgba(168, 85, 247, 0.3);
+}

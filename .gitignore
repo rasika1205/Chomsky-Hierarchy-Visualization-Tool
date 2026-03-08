@@ -1,0 +1,72 @@
+# ==============================
+# Node / React / Vite
+# ==============================
+node_modules/
+dist/
+build/
+.vite/
+.cache/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ==============================
+# Python
+# ==============================
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.so
+
+# Virtual environments
+env/
+venv/
+.venv/
+backend/env/
+
+# ==============================
+# Environment variables
+# ==============================
+.env
+.env.*
+!.env.example
+
+# ==============================
+# OS files
+# ==============================
+.DS_Store
+Thumbs.db
+
+# ==============================
+# IDE / Editors
+# ==============================
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+
+# ==============================
+# Testing / Coverage
+# ==============================
+coverage/
+.pytest_cache/
+.coverage
+
+# ==============================
+# Build artifacts
+# ==============================
+*.out
+*.pid
+*.seed
+
+# ==============================
+# Project specific
+# ==============================
+guidelines
+ATTRIBUTIONS.md
+README.md
