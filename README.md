@@ -367,12 +367,6 @@ http://localhost:5000
 
 # Frontend Setup
 
-Navigate to the frontend folder.
-
-```
-cd frontend
-```
-
 Install dependencies.
 
 ```
