@@ -64,43 +64,65 @@ def classify_language():
     language_class = "Recursively Enumerable"
     automaton = "Turing Machine"
 
-    if "a^n b^n c^n" in lang or "anbncn" in lang:
-        language_class = "Context Sensitive"
-        automaton = "Linear Bounded Automaton"
+    properties = {
+        "needs_memory": False,
+        "single_dependency": False,
+        "multiple_dependency": False,
+        "finite_pattern": False
+    }
 
-    elif (
-        "a^n b^n" in lang
-        or "anbn" in lang
-        or "balanced parentheses" in lang
-        or "palindrome" in lang
-    ):
-        language_class = "Context Free"
-        automaton = "Pushdown Automaton"
+    if "^n" in lang or "n" in lang:
+        properties["needs_memory"] = True
 
-    elif (
-        "(a+b)*" in lang
-        or "a*b*" in lang
-        or "regular" in lang
-        or "finite" in lang
+    if "a^n b^n" in lang or "anbn" in lang or "equal number of a and b" in lang:
+        properties["single_dependency"] = True
+
+    if "a^n b^n c^n" in lang or "anbncn" in lang or "equal number of a b c" in lang:
+        properties["multiple_dependency"] = True
+
+    if "balanced parentheses" in lang or "palindrome" in lang:
+        properties["single_dependency"] = True
+
+    if (
+            "(a+b)*" in lang
+            or "a*b*" in lang
+            or "regular expression" in lang
+            or "regex" in lang
+            or "finite" in lang
+            or "starts with" in lang
+            or "ends with" in lang
+            or "contains substring" in lang
     ):
+        properties["finite_pattern"] = True
+
+    if not properties["needs_memory"] or properties["finite_pattern"]:
         language_class = "Regular"
         automaton = "Finite Automaton"
 
+    elif properties["single_dependency"] and not properties["multiple_dependency"]:
+        language_class = "Context Free"
+        automaton = "Pushdown Automaton"
+
+    elif properties["multiple_dependency"]:
+        language_class = "Context Sensitive"
+        automaton = "Linear Bounded Automaton"
+
+
     try:
 
-        explanation_prompt = f"""
-Explain why the language '{lang}' belongs to the {language_class} class
-in the Chomsky hierarchy.
+            explanation_prompt = f"""
+                Explain why the language '{lang}' belongs to the {language_class} class
+                in the Chomsky hierarchy.
+                
+                Mention:
+                - why it belongs to that class
+                - what automaton recognizes it ({automaton})
+                - explanation suitable for a Theory of Computation student
+                """
 
-Mention:
-- why it belongs to that class
-- what automaton recognizes it ({automaton})
-- explanation suitable for a Theory of Computation student
-"""
+            response = model.generate_content(explanation_prompt)
 
-        response = model.generate_content(explanation_prompt)
-
-        explanation = response.text
+            explanation = response.text
 
     except:
         explanation = f"This language belongs to the {language_class} class and is recognized by a {automaton}."
