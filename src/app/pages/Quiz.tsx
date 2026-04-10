@@ -84,7 +84,7 @@ const [loading, setLoading] = useState(true)
   };
 
   const resetQuiz = () => {
-  fetch("http://localhost:5000/quiz")
+  fetch("http://localhost:5000/api/quiz")
     .then((res) => res.json())
     .then((data) => {
       setQuestions(data.questions)

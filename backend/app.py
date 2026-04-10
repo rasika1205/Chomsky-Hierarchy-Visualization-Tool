@@ -23,6 +23,9 @@ def serve():
 # Handle React routing
 @app.route("/<path:path>")
 def static_proxy(path):
+    if path.startswith("api/"):
+        return jsonify({"error": "API route not found"}), 404
+
     file_path = os.path.join(app.static_folder, path)
     if os.path.exists(file_path):
         return send_from_directory(app.static_folder, path)
@@ -177,7 +180,7 @@ Also mention:
 import random
 from backend.quiz_questions import questions
 
-@app.route("/quiz", methods=["GET"])
+@app.route("/api/quiz", methods=["GET"])
 def get_quiz():
 
     selected = random.sample(questions, 5)
