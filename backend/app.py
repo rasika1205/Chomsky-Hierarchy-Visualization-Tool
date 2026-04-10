@@ -154,7 +154,7 @@ Also mention:
     })
 
 import random
-from quiz_questions import questions
+from backend.quiz_questions import questions
 
 @app.route("/quiz", methods=["GET"])
 def get_quiz():
