@@ -21,7 +21,7 @@ const [loading, setLoading] = useState(true)
   const [answeredQuestions, setAnsweredQuestions] = useState<Set<number>>(new Set());
   const [quizCompleted, setQuizCompleted] = useState(false);
    useEffect(() => {
-  fetch("http://localhost:5000/api/quiz")
+  fetch("/api/quiz")
     .then((res) => res.json())
     .then((data) => {
       setQuestions(data.questions)
@@ -46,7 +46,7 @@ const [loading, setLoading] = useState(true)
 
   const question = questions[currentQuestion]
 
-  const res = await fetch("http://localhost:5000/api/quiz/explain", {
+  const res = await fetch("/api/quiz/explain", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -84,7 +84,7 @@ const [loading, setLoading] = useState(true)
   };
 
   const resetQuiz = () => {
-  fetch("http://localhost:5000/api/quiz")
+  fetch("/api/quiz")
     .then((res) => res.json())
     .then((data) => {
       setQuestions(data.questions)

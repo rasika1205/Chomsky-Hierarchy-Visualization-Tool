@@ -18,7 +18,7 @@ export function Classifier() {
   setIsLoading(true);
 
   try {
-    const response = await fetch("http://localhost:5000/api/classify", {
+    const response = await fetch("/api/classify", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
