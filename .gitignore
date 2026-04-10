@@ -2,7 +2,7 @@
 # Node / React / Vite
 # ==============================
 node_modules/
-dist/
+
 build/
 .vite/
 .cache/
