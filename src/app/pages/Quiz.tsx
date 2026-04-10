@@ -21,7 +21,7 @@ const [loading, setLoading] = useState(true)
   const [answeredQuestions, setAnsweredQuestions] = useState<Set<number>>(new Set());
   const [quizCompleted, setQuizCompleted] = useState(false);
    useEffect(() => {
-  fetch("http://localhost:5000/quiz")
+  fetch("http://localhost:5000/api/quiz")
     .then((res) => res.json())
     .then((data) => {
       setQuestions(data.questions)
