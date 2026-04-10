@@ -6,8 +6,29 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-app = Flask(__name__)
+from flask import Flask, send_from_directory
+import os
+
+app = Flask(
+    __name__,
+    static_folder="../frontend/build",
+    static_url_path="/"
+)
 CORS(app)
+# Serve React app
+@app.route("/")
+def serve():
+    return send_from_directory(app.static_folder, "index.html")
+
+# Handle React routing
+@app.route("/<path:path>")
+def static_proxy(path):
+    file_path = os.path.join(app.static_folder, path)
+    if os.path.exists(file_path):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, "index.html")
+
 
 
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
@@ -15,7 +36,7 @@ genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 model = genai.GenerativeModel("gemini-2.5-flash")
 
 
-@app.route("/chat", methods=["POST"])
+@app.route("/api/chat", methods=["POST"])
 def chat():
 
     data = request.json
@@ -59,7 +80,7 @@ User question:
 from flask import request, jsonify
 import re
 
-@app.route("/classify", methods=["POST"])
+@app.route("/api/classify", methods=["POST"])
 def classify_language():
 
     data = request.json
@@ -167,7 +188,7 @@ def get_quiz():
 
 
 
-@app.route("/quiz/explain", methods=["POST"])
+@app.route("/api/quiz/explain", methods=["POST"])
 def explain_question():
 
     data = request.json
@@ -195,7 +216,7 @@ from graphviz import Digraph
 import base64
 
 
-@app.route("/generate-dfa", methods=["POST"])
+@app.route("/api/generate-dfa", methods=["POST"])
 def generate_dfa():
 
     data = request.json

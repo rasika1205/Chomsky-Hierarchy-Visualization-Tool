@@ -1,19 +1,23 @@
 FROM python:3.11
 
-# Install system dependencies (THIS FIXES YOUR ERROR)
-RUN apt-get update && apt-get install -y graphviz
+# Install node
+RUN apt-get update && apt-get install -y nodejs npm
 
-# Set working directory
 WORKDIR /app
 
-# Copy files
+# Copy everything
 COPY . .
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r backend/requirements.txt
+# Build frontend
+WORKDIR /app/frontend
+RUN npm install
+RUN npm run build
 
-# Expose port
-EXPOSE 10000
+# Back to backend
+WORKDIR /app
+
+# Install backend deps
+RUN pip install --no-cache-dir -r backend/requirements.txt
 
 # Run app
 CMD ["gunicorn", "backend.app:app", "--bind", "0.0.0.0:10000"]

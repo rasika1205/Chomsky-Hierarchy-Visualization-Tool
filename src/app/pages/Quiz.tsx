@@ -46,7 +46,7 @@ const [loading, setLoading] = useState(true)
 
   const question = questions[currentQuestion]
 
-  const res = await fetch("http://localhost:5000/quiz/explain", {
+  const res = await fetch("http://localhost:5000/api/quiz/explain", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
