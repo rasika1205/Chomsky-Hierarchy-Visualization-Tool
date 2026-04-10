@@ -6,25 +6,25 @@ const layers = [
     name: "Recursively Enumerable",
     example: "All Turing Machine recognizable languages",
     size: 600,
-    color: "#a855f7"
+    color: "#ef4444"
   },
   {
     name: "Context Sensitive",
     example: "aⁿbⁿcⁿ",
     size: 460,
-    color: "#8b5cf6"
+    color: "#f59e0b"
   },
   {
     name: "Context Free",
     example: "aⁿbⁿ, balanced parentheses",
     size: 320,
-    color: "#7c3aed"
+    color: "#3b82f6"
   },
   {
     name: "Regular",
     example: "(a+b)*, a*b*",
     size: 180,
-    color: "#6d28d9"
+    color: "#10b981"
   }
 ];
 
@@ -45,7 +45,8 @@ export function VennDiagram() {
             style={{
               width: layer.size,
               height: layer.size,
-              border: `3px solid ${layer.color}`
+              border: `3px solid ${layer.color}`,
+              backgroundColor: `${layer.color}15`
             }}
           >
             {active === i && (

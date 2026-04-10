@@ -55,11 +55,17 @@ User question:
             "error": str(e)
         }), 500
 
+
+from flask import request, jsonify
+import re
+
 @app.route("/classify", methods=["POST"])
 def classify_language():
 
     data = request.json
     lang = data.get("language", "").lower().strip()
+
+    normalized = lang.replace(" ", "")
 
     language_class = "Recursively Enumerable"
     automaton = "Turing Machine"
@@ -71,29 +77,42 @@ def classify_language():
         "finite_pattern": False
     }
 
-    if "^n" in lang or "n" in lang:
+
+    if re.search(r"a\^?n+b\^?n+", normalized) or re.search(r"anbn", normalized):
+        properties["single_dependency"] = True
         properties["needs_memory"] = True
 
-    if "a^n b^n" in lang or "anbn" in lang or "equal number of a and b" in lang:
-        properties["single_dependency"] = True
-
-    if "a^n b^n c^n" in lang or "anbncn" in lang or "equal number of a b c" in lang:
+    if re.search(r"a\^?n+b\^?n+c\^?n+", normalized) or re.search(r"anbncn", normalized):
         properties["multiple_dependency"] = True
+        properties["needs_memory"] = True
+
+    if re.search(r"n[≥>=]+[0-9]+", normalized):
+        properties["needs_memory"] = True
+
+    if "equal number of a and b" in lang:
+        properties["single_dependency"] = True
+        properties["needs_memory"] = True
+
+    if "equal number of a b c" in lang:
+        properties["multiple_dependency"] = True
+        properties["needs_memory"] = True
 
     if "balanced parentheses" in lang or "palindrome" in lang:
         properties["single_dependency"] = True
+        properties["needs_memory"] = True
 
     if (
-            "(a+b)*" in lang
-            or "a*b*" in lang
-            or "regular expression" in lang
-            or "regex" in lang
-            or "finite" in lang
-            or "starts with" in lang
-            or "ends with" in lang
-            or "contains substring" in lang
+        "(a+b)*" in lang
+        or "a*b*" in lang
+        or "regular expression" in lang
+        or "regex" in lang
+        or "finite" in lang
+        or "starts with" in lang
+        or "ends with" in lang
+        or "contains substring" in lang
     ):
         properties["finite_pattern"] = True
+
 
     if not properties["needs_memory"] or properties["finite_pattern"]:
         language_class = "Regular"
@@ -109,20 +128,21 @@ def classify_language():
 
 
     try:
+        explanation_prompt = f"""
+Explain why the language '{lang}' belongs to the {language_class} class in the Chomsky hierarchy.
 
-            explanation_prompt = f"""
-                Explain why the language '{lang}' belongs to the {language_class} class
-                in the Chomsky hierarchy.
-                
-                Mention:
-                - why it belongs to that class
-                - what automaton recognizes it ({automaton})
-                - explanation suitable for a Theory of Computation student
-                """
+IMPORTANT:
+- If constraints like n ≥ 0 or n ≥ 1 are present, explain that they do NOT change the class.
+- Focus on dependency between symbols.
 
-            response = model.generate_content(explanation_prompt)
+Also mention:
+- why it belongs to that class
+- what automaton recognizes it ({automaton})
+- explanation suitable for a Theory of Computation student
+"""
 
-            explanation = response.text
+        response = model.generate_content(explanation_prompt)
+        explanation = response.text
 
     except:
         explanation = f"This language belongs to the {language_class} class and is recognized by a {automaton}."
