@@ -1,7 +1,7 @@
 FROM python:3.11
 
 # Install node
-RUN apt-get update && apt-get install -y nodejs npm
+RUN apt-get update && apt-get install -y nodejs npm graphviz
 
 WORKDIR /app
 
